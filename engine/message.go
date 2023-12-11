@@ -1,6 +1,7 @@
 package engine
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 
@@ -17,29 +18,35 @@ import (
 // - bool
 
 type message struct {
-	syntax      string
-	packageName string
-	fileName    string
-	items       []MessageItem
+	Syntax      string        `json:"syntax"`
+	PackageName string        `json:"package"`
+	FileName    string        `json:"file"`
+	Items       []MessageItem `json:"items"`
 
-	fd pref.FileDescriptor
+	fd pref.FileDescriptor `json:"-"`
 }
 
 type MessageItem struct {
-	Name     string
-	Keys     []string // name, example id, title, content
-	Types    []string // int string bool
-	Repeated map[string]bool
-	Optional map[string]bool
+	Name     string          `json:"name"`
+	Keys     []string        `json:"keys"`  // name, example id, title, content
+	Types    []string        `json:"types"` // int string bool
+	Repeated map[string]bool `json:"repeated"`
+	Optional map[string]bool `json:"optional"`
 }
 
 func NewMessage(packageName string, filename string, fields []MessageItem) *message {
 	return &message{
-		syntax:      "proto3",
-		packageName: packageName,
-		fileName:    filename,
-		items:       fields[:],
+		Syntax:      "proto3",
+		PackageName: packageName,
+		FileName:    filename,
+		Items:       fields[:],
 	}
+}
+
+func NewMessageByJson(data []byte) *message {
+	var res message
+	json.Unmarshal(data, &res)
+	return &res
 }
 
 func (m *MessageItem) GetDescriptor() *descriptorpb.DescriptorProto {
@@ -91,12 +98,12 @@ func (m *MessageItem) GetDescriptor() *descriptorpb.DescriptorProto {
 
 func (m *message) init() error {
 	pb := &descriptorpb.FileDescriptorProto{
-		Syntax:      proto.String(m.syntax),
-		Name:        proto.String(fmt.Sprintf("%s.%s", m.packageName, m.fileName)),
-		Package:     proto.String(m.packageName),
+		Syntax:      proto.String(m.Syntax),
+		Name:        proto.String(fmt.Sprintf("%s.%s", m.PackageName, m.FileName)),
+		Package:     proto.String(m.PackageName),
 		MessageType: []*descriptorpb.DescriptorProto{},
 	}
-	for _, item := range m.items {
+	for _, item := range m.Items {
 		pb.MessageType = append(pb.MessageType, item.GetDescriptor())
 	}
 
@@ -116,7 +123,7 @@ func (m *message) Marshal(name string, values []interface{}) ([]byte, error) {
 	}
 	var messageItem MessageItem
 	var messageItemFound bool
-	for _, item := range m.items {
+	for _, item := range m.Items {
 		if item.Name == name {
 			messageItem = item
 			messageItemFound = true

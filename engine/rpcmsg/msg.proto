@@ -1,0 +1,35 @@
+syntax="proto3";
+package pb;
+option go_package = "/";
+
+message ReqHello{
+    string name = 1;
+}
+
+message RespHello{
+    string name = 1;
+}
+
+message ReqSend{
+    string name = 1;
+}
+
+message RespSend{
+    string name = 1;
+}
+
+message ReqRequest{
+    string name = 1;
+}
+
+message RespRequest{
+    string name = 1;
+}
+
+message ReqCall{
+    string name = 1;
+}
+
+message RespCall{
+    string name = 1;
+}
