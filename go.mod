@@ -6,7 +6,7 @@ require (
 	github.com/gorilla/websocket v1.5.0
 	github.com/nats-io/nats.go v1.31.0
 	github.com/wwqdrh/gokit/logger v0.0.0-20231205135120-8ee242139865
-	github.com/wwqdrh/gokit/nettool v0.0.0-20231212154700-152a28c4e15c
+	github.com/wwqdrh/gokit/nettool v0.0.0-20231212161256-7d8f7d1ce6a4
 	go.uber.org/zap v1.25.0
 	google.golang.org/protobuf v1.26.0
 )

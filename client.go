@@ -27,6 +27,14 @@ func NewClient(conn Conn, mgr *Mgr) *Client {
 	return p
 }
 
+func (p *Client) OnNew() {
+	p.mgr.Post(func() {
+		p.mgr.sesID2Client[p.conn.ID()] = p
+		p.mgr.onNew(p)
+	})
+	p.ReadLoop()
+}
+
 func (p *Client) ReadLoop() {
 	for {
 		data, err := p.conn.ReadMsg()
@@ -44,13 +52,6 @@ func (p *Client) ReadLoop() {
 			err = p.mgr.processor.Handle(msg, p)
 		})
 	}
-}
-
-func (p *Client) OnNew() {
-	p.mgr.Post(func() {
-		p.mgr.sesID2Client[p.conn.ID()] = p
-		p.mgr.onNew(p)
-	})
 }
 
 func (p *Client) OnClose() {

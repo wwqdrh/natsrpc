@@ -84,12 +84,8 @@ func CheckArgs1MsgFun(cb interface{}) (err error, funValue reflect.Value, msgTyp
 //}
 
 func (p *Mgr) Run() {
-	wss := ws.NewWSServer(p.wsAddr, func(conn ws.Conn) {
-		c := NewClient(conn, p)
-		c.OnNew()
-		c.ReadLoop()
-	}, func(conn ws.Conn) {
-		NewClient(conn, p).OnClose()
+	wss := ws.NewWSServer(p.wsAddr, func(conn ws.Conn) ws.IConnInvoker {
+		return NewClient(conn, p)
 	})
 	p.wss = wss
 	wss.Start()

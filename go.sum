@@ -30,6 +30,8 @@ github.com/wwqdrh/gokit/nettool v0.0.0-20231212145552-7a4a25ddd7b0 h1:ZPnwlKVEUn
 github.com/wwqdrh/gokit/nettool v0.0.0-20231212145552-7a4a25ddd7b0/go.mod h1:LUA8xPrmYoKWq5D8Bh0y6hI40dNGecVNKF4GxCPrX4I=
 github.com/wwqdrh/gokit/nettool v0.0.0-20231212154700-152a28c4e15c h1:cEDMYvdMXiYIraGLek4aX0yrVDPHmcmSb2iI6xI3jdw=
 github.com/wwqdrh/gokit/nettool v0.0.0-20231212154700-152a28c4e15c/go.mod h1:LUA8xPrmYoKWq5D8Bh0y6hI40dNGecVNKF4GxCPrX4I=
+github.com/wwqdrh/gokit/nettool v0.0.0-20231212161256-7d8f7d1ce6a4 h1:idPwVu6p06jbkbZoxI/d3+VfgHfBBqCC9SfUKCgWEWg=
+github.com/wwqdrh/gokit/nettool v0.0.0-20231212161256-7d8f7d1ce6a4/go.mod h1:LUA8xPrmYoKWq5D8Bh0y6hI40dNGecVNKF4GxCPrX4I=
 go.uber.org/goleak v1.2.0 h1:xqgm/S+aQvhWFTtR0XK3Jvg7z8kGV8P4X14IzwN3Eqk=
 go.uber.org/multierr v1.11.0 h1:blXXJkSxSSfBVBlC76pxqeO+LN3aDfLQo+309xJstO0=
 go.uber.org/multierr v1.11.0/go.mod h1:20+QtiLqy0Nd6FdQB9TLXag12DsQkrbs3htMFfDN80Y=
