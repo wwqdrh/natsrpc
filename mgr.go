@@ -12,6 +12,7 @@ import (
 	"hash/crc32"
 
 	"github.com/wwqdrh/gokit/logger"
+	"github.com/wwqdrh/gokit/nettool/server/ws"
 	"google.golang.org/protobuf/proto"
 )
 
@@ -38,7 +39,7 @@ type Mgr struct {
 	onNew, onClose func(conn Session)
 	processor      *Processor
 	worker         Worker
-	wss            *WSServer
+	wss            *ws.WSServer
 
 	close func()
 }
@@ -83,10 +84,12 @@ func CheckArgs1MsgFun(cb interface{}) (err error, funValue reflect.Value, msgTyp
 //}
 
 func (p *Mgr) Run() {
-	//创建websocket server
-	wss := NewWSServer(p.wsAddr, func(conn Conn) *Client {
+	wss := ws.NewWSServer(p.wsAddr, func(conn ws.Conn) {
 		c := NewClient(conn, p)
-		return c
+		c.OnNew()
+		c.ReadLoop()
+	}, func(conn ws.Conn) {
+		NewClient(conn, p).OnClose()
 	})
 	p.wss = wss
 	wss.Start()

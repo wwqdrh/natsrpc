@@ -4,10 +4,20 @@ import (
 	"encoding/json"
 	"os"
 
+	"net"
+
 	"github.com/nats-io/nats.go"
 	"github.com/wwqdrh/gokit/logger"
 	"go.uber.org/zap"
 )
+
+type Conn interface {
+	ReadMsg() ([]byte, error)
+	WriteMsg(args []byte) error
+	LocalAddr() net.Addr
+	ID() int32
+	Close()
+}
 
 type Config struct {
 	Nats string `json:"nats"`
